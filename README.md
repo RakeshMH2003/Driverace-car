@@ -126,12 +126,7 @@ Email: speed@rent.com
 Password: 123456
 ```
 
-### 🛠️ Admin
 
-```
-Email: rakesh@gmail.com
-Password: rakesh@123
-```
 
 ---
 
