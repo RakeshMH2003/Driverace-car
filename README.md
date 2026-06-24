@@ -1,75 +1,192 @@
-# DriveEase — Premium Car Rental Platform
+# 🚗 DriveEase — Premium Car Rental Platform
 
-DriveEase is a modern, responsive, full-stack car rental web application designed with a sleek, premium dark-luxury aesthetic. It offers dedicated portals for Customers, Vendors, and Administrators, enabling a complete end-to-end car rental workflow.
-
----
-
-## 🌟 Key Features
-
-### 👤 Customer Portal
-- **Vehicle Catalog**: Browse, search, sort, and filter available cars by category (Sedan, SUV, Luxury, Hatchback) and price.
-- **Booking Engine**: Easy booking form with location select (pickup/return) and automated total cost calculation.
-- **User Dashboard**: Manage profile details, upload driver's license (front/back), and review booking history.
-- **Booking Cancellation**: Instantly cancel active bookings directly from the dashboard.
-- **Support Inbox**: Direct messaging channel to contact administrators for support/issues.
-
-### 🏢 Vendor Portal
-- **Vehicle Management**: Register vehicles with daily rates, seats, images (up to 5), and mandatory insurance documents.
-- **Order Notifications**: Track active orders/bookings of vehicles listed by the vendor.
-
-### 🛡️ Admin Portal
-- **Statistics Overview**: High-level metrics showing total users, active vehicles, bookings, and revenue.
-- **User Verification**: View and approve/reject vendor sign-ups and inspect customer driver's licenses.
-- **Vehicle Approvals**: Review and approve/reject vendor-submitted cars (with direct links to view uploaded insurance PDF/images).
-- **Booking Cancellation Controls**: Terminate active bookings if conflict issues arise.
-- **Message Center**: View, read, and manage all support queries submitted by users.
+> A modern, full-featured **Full-Stack Car Rental Web Application** with User, Vendor, and Admin modules.
 
 ---
 
-## 🛠️ Tech Stack
+## 🌟 Live Features
 
-- **Backend**: Node.js & Express.js
-- **Database**: SQLite3 (Local file-based database for simplicity and easy hosting compatibility)
-- **Frontend**: HTML5, Vanilla CSS (Premium luxury style, glassmorphism, smooth animations), Bootstrap 5 (for grid layouts & modal interactions)
-- **File Uploads**: Multer (stores vehicle images, insurance files, and driver's licenses)
+✨ Beautiful Dark Luxury UI  
+🚘 Browse & Book Vehicles  
+👤 User Authentication (Login / Signup)  
+🏪 Vendor Dashboard (Add Vehicles & Upload Insurance)  
+🛡️ Driver's License & Insurance Verification  
+💬 User-to-Admin Direct Messaging  
+📊 Admin Control Panel with Booking Cancellation  
+⚡ Interactive Booking System  
+📱 Fully Responsive Design  
 
 ---
 
-## 🚀 Local Installation & Setup
+## 🧩 Project Modules
 
-1. **Clone the repository:**
+### 👤 User Module
+
+* Sign up / Login
+* Browse vehicles
+* Filter & search cars
+* Book vehicles instantly
+* Upload driving license (front/back)
+* View booking history & status
+* Cancel active bookings
+* Direct messaging to admin for support
+
+---
+
+### 🏪 Vendor Module
+
+* Vendor registration & login
+* Add new vehicles with daily rates and seats
+* Upload:
+  * Vehicle images (up to 5)
+  * Mandatory insurance documents (PDF or image)
+* Track active orders and bookings for listed vehicles
+
+---
+
+### 🛠️ Admin Module
+
+* Manage users and roles
+* Approve/reject vendors
+* Approve/reject vehicles (with links to view insurance documents)
+* Monitor all bookings and cancel active bookings if issues arise
+* Support Inbox to read and manage messages sent by users
+* Real-time metrics (Total users, active vehicles, bookings, revenue)
+
+---
+
+## 🖥️ Tech Stack
+
+| Technology                    | Usage                      |
+| ----------------------------- | -------------------------- |
+| HTML5                         | Structure                  |
+| CSS3                          | Styling (Dark Luxury UI)   |
+| JavaScript (Vanilla + Client) | Frontend Logic & API calls |
+| Bootstrap 5                   | Layout & Interactive Modals|
+| Node.js & Express             | Backend API Server         |
+| SQLite3                       | Relational Database        |
+| Multer                        | File & Document Uploads    |
+
+---
+
+## 📂 Project Structure
+
+```
+DriveEase/
+│
+├── public/           # Frontend Static Assets
+│   ├── index.html    # Main UI file
+│   ├── style.css     # Styling (Dark theme)
+│   └── app.js        # Frontend Logic & API client
+│
+├── docs/             # GitHub Pages Deployment folder
+│
+├── database.js       # SQLite Database connection & schemas
+├── server.js         # Node/Express Backend Server & routes
+├── package.json      # Dependencies and script runner
+└── README.md         # Project documentation
+```
+
+---
+
+## 🚀 How to Run Locally
+
+1. Clone the project:
    ```bash
    git clone https://github.com/RakeshMH2003/Driverace-car.git
    cd Driverace-car
    ```
-
-2. **Install dependencies:**
+2. Install dependencies:
    ```bash
    npm install
    ```
-
-3. **Start the application:**
+3. Run the backend server:
    ```bash
    npm start
    ```
-
-4. **Access the application:**
-   Open your browser and navigate to `http://localhost:3000`.
+4. Open in browser:
+   Navigate to **`http://localhost:3000`**
 
 ---
 
-## ☁️ Deployment
+## 🔐 Demo Credentials
 
-### Render.com (Recommended for Free Full-Stack Hosting)
-This project is pre-configured to run flawlessly on Render's Web Service.
+### 👤 User
 
-1. Create a free account at **[Render.com](https://render.com)**.
-2. Click **"New +"** → **"Web Service"** and connect your GitHub repo.
-3. Use the following settings:
-   - **Runtime**: `Node`
-   - **Build Command**: `npm install`
-   - **Start Command**: `node server.js`
-   - **Instance Type**: `Free`
-4. Click **Create Web Service**.
+```
+Create your own account or use:
+Email: car@gmail.com
+Password: (use your registered password)
+```
 
-*Note: The project includes a configuration that automatically builds SQLite from source on Render's servers to avoid version mismatches.*
+### 🏪 Vendor
+
+```
+Email: speed@rent.com
+Password: 123456
+```
+
+### 🛠️ Admin
+
+```
+Email: rakesh@gmail.com
+Password: rakesh@123
+```
+
+---
+
+## 📸 Key Features (UI Highlights)
+
+* Animated Hero Section
+* Trending Vehicles Carousel
+* Dynamic Filtering (Type, Price, Sort)
+* Interactive Modal Booking System
+* Responsive User, Vendor, and Admin Dashboards
+* Toast Notifications
+
+---
+
+## 🧠 Smart Fixes & Upgrades Included
+
+✔ Full-stack backend migration with SQLite DB  
+✔ Fixed document upload issues using Multer  
+✔ Handled GLIBC node binary issues on Render deployment  
+✔ Admin portal fully linked to verify customer licenses  
+✔ Direct user-to-admin message dashboard  
+✔ Added booking cancellation engine for both users and admin  
+
+---
+
+## 🤝 Contribution
+
+Feel free to fork and improve:
+
+```bash
+git clone https://github.com/RakeshMH2003/Driverace-car.git
+```
+
+---
+
+## 📧 Contact
+
+📩 [rakesh@gmail.com](mailto:rakesh@gmail.com)  
+📍 Bengaluru, India
+
+---
+
+## ⭐ Support
+
+If you like this project:
+
+👉 Star ⭐ the repository  
+👉 Share with friends  
+
+---
+
+## 🏁 Conclusion
+
+DriveEase is a **complete full-stack car rental system** designed with a modern dark luxury UI and real-world workflows:
+
+✔ Real database persistence  
+✔ Document validation workflow  
+✔ Comprehensive Admin controls  
