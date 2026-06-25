@@ -2,6 +2,19 @@
 let currentUser = JSON.parse(localStorage.getItem('driveease_user')) || null;
 const API_BASE = '/api';
 
+// Helper: Open Base64 document (image or PDF) in a new browser tab
+function viewDocument(base64Str) {
+    if (!base64Str) return;
+    const newTab = window.open();
+    if (!newTab) { alert('Please allow popups to view documents.'); return; }
+    if (base64Str.startsWith('data:application/pdf')) {
+        newTab.document.write(`<html><head><title>Document Viewer</title></head><body style="margin:0;"><iframe src="${base64Str}" style="width:100%;height:100vh;border:none;"></iframe></body></html>`);
+    } else {
+        newTab.document.write(`<html><head><title>Document Viewer</title></head><body style="margin:0;background:#111;display:flex;justify-content:center;align-items:center;min-height:100vh;"><img src="${base64Str}" style="max-width:100%;max-height:100vh;object-fit:contain;"/></body></html>`);
+    }
+    newTab.document.close();
+}
+
 document.addEventListener('DOMContentLoaded', () => {
     setTimeout(() => {
         document.getElementById('loader').classList.add('hidden');
@@ -567,9 +580,12 @@ async function initAdminDashboard() {
     } catch(e) { console.error('Admin init error', e); }
 }
 
+let adminUserDocs = {};
 async function loadAdminUsers() {
     try {
         const users = await apiCall('/admin/users');
+        adminUserDocs = {};
+        users.forEach(u => { adminUserDocs[u.id] = { front: u.license_front, back: u.license_back }; });
         
         // Split vendors and customers for different tabs
         const vendors = users.filter(u => u.role === 'vendor');
@@ -600,8 +616,8 @@ async function loadAdminUsers() {
                     <div><strong>${u.name}</strong><br/>${u.email}</div>
                     <div>${u.city || 'N/A'}<br/>${u.phone || 'N/A'}</div>
                     <div>
-                        ${u.license_front ? `<a href="${u.license_front}" target="_blank" class="accent-text"><i class="fas fa-id-card"></i> View Front</a>` : '<span class="text-muted">Missing</span>'}<br/>
-                        ${u.license_back ? `<a href="${u.license_back}" target="_blank" class="accent-text"><i class="fas fa-id-card-alt"></i> View Back</a>` : ''}
+                        ${u.license_front ? `<a href="javascript:void(0)" onclick="viewDocument(adminUserDocs[${u.id}].front)" class="accent-text"><i class="fas fa-id-card"></i> View Front</a>` : '<span class="text-muted">Missing</span>'}<br/>
+                        ${u.license_back ? `<a href="javascript:void(0)" onclick="viewDocument(adminUserDocs[${u.id}].back)" class="accent-text"><i class="fas fa-id-card-alt"></i> View Back</a>` : ''}
                     </div>
                     <div>
                         <button class="btn btn-sm btn-danger"><i class="fas fa-trash"></i></button>
@@ -622,17 +638,20 @@ async function updateUserStatus(id, status) {
     } catch(e) { showToast('Error: ' + e.message); }
 }
 
+let adminVehiclesDocs = {};
 async function loadAdminVehicles() {
     try {
         const vehicles = await apiCall('/admin/vehicles');
         const list = document.getElementById('aVehiclesList');
+        adminVehiclesDocs = {};
+        vehicles.forEach(v => { if(v.insurance_doc) adminVehiclesDocs[v.id] = v.insurance_doc; });
         
         let html = `<div class="dt-row dt-hdr"><div>Vehicle</div><div>Vendor</div><div>Insurance Doc</div><div>Status</div><div>Actions</div></div>`;
         vehicles.forEach(v => {
             const statusClass = v.status === 'approved' ? 'bg-success-subtle' : (v.status === 'pending' ? 'bg-warning-subtle' : 'bg-danger-subtle');
             // BUG FIX: Link directly to the uploaded file using target="_blank" so the admin can view the document
             const insDocLink = v.insurance_doc 
-                ? `<a href="${v.insurance_doc}" target="_blank" class="btn btn-sm btn-outline-info"><i class="fas fa-file-pdf"></i> View Doc</a>` 
+                ? `<button class="btn btn-sm btn-outline-info" onclick="viewDocument(adminVehiclesDocs[${v.id}])"><i class="fas fa-file-pdf"></i> View Doc</button>` 
                 : `<span class="text-danger">Not Uploaded</span>`;
 
             html += `
@@ -661,9 +680,12 @@ async function updateVehicleStatus(id, status) {
     } catch(e) { showToast('Error: ' + e.message); }
 }
 
+let adminBookingDocs = {};
 async function loadAdminBookings() {
     try {
         const bookings = await apiCall('/admin/bookings');
+        adminBookingDocs = {};
+        bookings.forEach(b => { if(b.license_front) adminBookingDocs[b.id] = b.license_front; });
         const list = document.getElementById('aBookingsList');
         
         list.innerHTML = bookings.map(b => `
@@ -671,7 +693,7 @@ async function loadAdminBookings() {
                 <div class="b-info">
                     <h4>${b.vehicle_name} <span class="badge bg-secondary ms-2">Booking #${b.id}</span></h4>
                     <div class="b-dates"><strong>Customer:</strong> ${b.user_name} 
-                        ${b.license_front ? `<a href="${b.license_front}" target="_blank" class="ms-2 accent-text"><i class="fas fa-id-card"></i> License</a>` : ''}
+                        ${b.license_front ? `<a href="javascript:void(0)" onclick="viewDocument(adminBookingDocs[${b.id}])" class="ms-2 accent-text"><i class="fas fa-id-card"></i> License</a>` : ''}
                     </div>
                     <div class="b-dates"><i class="fas fa-calendar-alt"></i> ${b.start_date} to ${b.end_date}</div>
                     <div class="b-loc"><i class="fas fa-map-marker-alt"></i> Pick: ${b.pickup_loc} | Return: ${b.return_loc}</div>
